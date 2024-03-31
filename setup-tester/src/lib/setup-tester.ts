@@ -10,13 +10,8 @@ export function minStepsToStrongPassword(password: string): number {
     validateHasLowerCase(i);
     validateHasUppercase(i);
     validateHasDigit(i);
-    if (
-      i > 1 &&
-      password[i] === password[i - 1] &&
-      password[i] === password[i - 2]
-    ) {
-      repeatLength++;
-      i++; // Skip the next character to avoid counting overlapping repeats
+    if (countRepeats(i)) {
+      i++;
     }
   }
 
@@ -38,6 +33,19 @@ export function minStepsToStrongPassword(password: string): number {
   stepsToFix += repeatLength;
 
   return stepsToFix;
+
+  function countRepeats(i: number) {
+    let shouldSkipNextCharacter = false;
+    if (
+      i > 1 &&
+      password[i] === password[i - 1] &&
+      password[i] === password[i - 2]
+    ) {
+      repeatLength++;
+      shouldSkipNextCharacter = true;
+    }
+    return shouldSkipNextCharacter;
+  }
 
   function validateHasDigit(i: number) {
     if (password[i] >= '0' && password[i] <= '9') hasDigit = true;
