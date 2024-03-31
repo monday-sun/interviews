@@ -1,3 +1,7 @@
+# Install
+
+npm install
+
 # Build
 
 nx run <lib-name>:build --watch
