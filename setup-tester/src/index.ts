@@ -1,1 +1,1 @@
-export * from './lib/setup-tester';
+export * from './lib/check-password';
