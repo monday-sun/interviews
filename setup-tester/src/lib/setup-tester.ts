@@ -7,9 +7,9 @@ export function minStepsToStrongPassword(password: string): number {
 
   // Check for lowercase, uppercase, digit, and repeating characters
   for (let i = 0; i < password.length; i++) {
-    if (password[i] >= 'a' && password[i] <= 'z') hasLowercase = true;
-    if (password[i] >= 'A' && password[i] <= 'Z') hasUppercase = true;
-    if (password[i] >= '0' && password[i] <= '9') hasDigit = true;
+    validateHasLowerCase(i);
+    validateHasUppercase(i);
+    validateHasDigit(i);
     if (
       i > 1 &&
       password[i] === password[i - 1] &&
@@ -38,4 +38,16 @@ export function minStepsToStrongPassword(password: string): number {
   stepsToFix += repeatLength;
 
   return stepsToFix;
+
+  function validateHasDigit(i: number) {
+    if (password[i] >= '0' && password[i] <= '9') hasDigit = true;
+  }
+
+  function validateHasUppercase(i: number) {
+    if (password[i] >= 'A' && password[i] <= 'Z') hasUppercase = true;
+  }
+
+  function validateHasLowerCase(i: number) {
+    if (password[i] >= 'a' && password[i] <= 'z') hasLowercase = true;
+  }
 }
