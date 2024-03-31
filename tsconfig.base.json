@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@interviews-ts/setup-tester": ["setup-tester/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

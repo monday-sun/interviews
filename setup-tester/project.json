@@ -1,0 +1,19 @@
+{
+  "name": "setup-tester",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "setup-tester/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/setup-tester",
+        "main": "setup-tester/src/index.ts",
+        "tsConfig": "setup-tester/tsconfig.lib.json",
+        "assets": ["setup-tester/*.md"]
+      }
+    }
+  }
+}
