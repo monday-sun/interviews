@@ -7,17 +7,25 @@ describe('minStepsToStrongPassword', () => {
     });
 
     test('should return 1 for a password missing a digit', () => {
-      expect(minStepsToStrongPassword('Strong')).toBe(1);
+      expect(minStepsToStrongPassword('WeakPass')).toBe(1);
+    });
+
+    test('should return 1 for a password missing a lower case letter', () => {
+      expect(minStepsToStrongPassword('WEAKPASS1')).toBe(1);
     });
 
     test('should return 2 for a password missing an uppercase letter and a digit', () => {
-      expect(minStepsToStrongPassword('abcdef')).toBe(2);
+      expect(minStepsToStrongPassword('weakpass')).toBe(2);
     });
   });
 
   describe('repeat tokens', () => {
     test('should return 1 for a password with three repeating characters', () => {
       expect(minStepsToStrongPassword('Baaabb0')).toBe(1);
+    });
+
+    test('should return 2 for a password with four repeating characters', () => {
+      expect(minStepsToStrongPassword('Baaaaabb0')).toBe(2);
     });
 
     test('should return 0 for a password with two repeating characters', () => {
