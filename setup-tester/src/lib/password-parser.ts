@@ -9,10 +9,11 @@ export class PasswordParser {
 
   parse(): PasswordStats {
     return {
-      lowercase: this.hasLowercase(),
-      uppercase: this.hasUppercase(),
-      digit: this.hasDigit(),
-      repeats: this.countRepeats(),
+      length: this.password.length,
+      hasLowercase: this.hasLowercase(),
+      hasUppercase: this.hasUppercase(),
+      hasDigit: this.hasDigit(),
+      countRepeatsOver3: this.countRepeats(),
     };
   }
 
@@ -29,16 +30,16 @@ export class PasswordParser {
   }
 
   private countRepeats(): number {
-    let repeats = 0;
+    let countRepeatsOver3 = 0;
     for (let i = 2; i < this.password.length; i++) {
       if (
         this.password[i] === this.password[i - 1] &&
         this.password[i] === this.password[i - 2]
       ) {
-        repeats++;
+        countRepeatsOver3++;
         i++;
       }
     }
-    return repeats;
+    return countRepeatsOver3;
   }
 }

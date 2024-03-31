@@ -1,6 +1,7 @@
 export type PasswordStats = {
-  lowercase: boolean;
-  uppercase: boolean;
-  digit: boolean;
-  repeats: number;
+  length: number;
+  hasLowercase: boolean;
+  hasUppercase: boolean;
+  hasDigit: boolean;
+  countRepeatsOver3: number;
 };

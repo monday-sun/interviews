@@ -12,15 +12,15 @@ export class PasswordValidator {
   getMinStepsToStrongPassword(): number {
     let steps = this.calculateCharacterTypeSteps();
     steps += this.adjustForLength();
-    steps += this.stats.repeats;
+    steps += this.stats.countRepeatsOver3;
     return steps;
   }
 
   private calculateCharacterTypeSteps(): number {
     return (
-      (this.stats.lowercase ? 0 : 1) +
-      (this.stats.uppercase ? 0 : 1) +
-      (this.stats.digit ? 0 : 1)
+      (this.stats.hasLowercase ? 0 : 1) +
+      (this.stats.hasUppercase ? 0 : 1) +
+      (this.stats.hasDigit ? 0 : 1)
     );
   }
 
@@ -32,7 +32,10 @@ export class PasswordValidator {
       );
     } else if (this.passwordLength > 20) {
       const excessLength = this.passwordLength - 20;
-      this.stats.repeats = Math.max(this.stats.repeats - excessLength, 0);
+      this.stats.countRepeatsOver3 = Math.max(
+        this.stats.countRepeatsOver3 - excessLength,
+        0
+      );
       return excessLength;
     }
     return 0;
