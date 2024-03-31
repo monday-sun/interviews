@@ -70,7 +70,7 @@ describe('PasswordValidator', () => {
     expect(validator.validate(stats)).toBe(2);
   });
 
-  test('should return 9 for an empty password', () => {
+  test('should return 6 for an empty password', () => {
     const stats: PasswordStats = {
       length: 0,
       hasLowercase: false,
@@ -78,6 +78,19 @@ describe('PasswordValidator', () => {
       hasDigit: false,
       countRepeatsOver3: 0,
     };
-    expect(validator.validate(stats)).toBe(9);
+    expect(validator.validate(stats)).toBe(6);
+  });
+
+  test('should return 3 for 3 repeat, missing upper, missing lower', () => {
+    const stats: PasswordStats = {
+      length: 10,
+      hasLowercase: false,
+      hasUppercase: false,
+      hasDigit: true,
+      countRepeatsOver3: 3,
+    };
+    expect(validator.validate(stats)).toBe(3);
   });
 });
+
+('bba7aa6aa5aa4aa3ac2cc1c');

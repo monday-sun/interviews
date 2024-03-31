@@ -1,11 +1,30 @@
-import { PasswordStats } from "./password.types";
+import { PasswordStats } from './password.types';
 
 export class PasswordValidator {
   validate(stats: PasswordStats): number {
-    let steps = this.calculateCharacterTypeSteps(stats);
-    steps += this.adjustForLength(stats);
-    steps += stats.countRepeatsOver3;
-    return steps;
+    if (stats.length < 6) {
+      return 6 - stats.length;
+    }
+
+    let stepsNeededForTypes = this.calculateCharacterTypeSteps(stats);
+
+    if (stats.length > 20) {
+      const excessLength = stats.length - 20;
+      const stepsSavedByRemovingRepeats = Math.min(
+        excessLength,
+        stats.countRepeatsOver3
+      );
+      stats.countRepeatsOver3 -= stepsSavedByRemovingRepeats;
+      stepsNeededForTypes = Math.max(
+        stepsNeededForTypes - stepsSavedByRemovingRepeats,
+        0
+      );
+      return (
+        excessLength + Math.max(stats.countRepeatsOver3, stepsNeededForTypes)
+      );
+    }
+
+    return Math.max(stats.countRepeatsOver3, stepsNeededForTypes);
   }
 
   private calculateCharacterTypeSteps(stats: PasswordStats): number {
@@ -14,22 +33,5 @@ export class PasswordValidator {
       (!stats.hasUppercase ? 1 : 0) +
       (!stats.hasDigit ? 1 : 0)
     );
-  }
-
-  private adjustForLength(stats: PasswordStats): number {
-    if (stats.length < 6) {
-      return Math.max(
-        6 - stats.length,
-        this.calculateCharacterTypeSteps(stats)
-      );
-    } else if (stats.length > 20) {
-      const excessLength = stats.length - 20;
-      stats.countRepeatsOver3 = Math.max(
-        stats.countRepeatsOver3 - excessLength,
-        0
-      );
-      return excessLength;
-    }
-    return 0;
   }
 }

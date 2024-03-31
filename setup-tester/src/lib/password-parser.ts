@@ -7,7 +7,7 @@ export class PasswordParser {
       hasLowercase: this.hasLowercase(password),
       hasUppercase: this.hasUppercase(password),
       hasDigit: this.hasDigit(password),
-      countRepeatsOver3: this.countRepeats(password),
+      countRepeatsOver3: this.countRepeatsOver3(password),
     };
   }
 
@@ -23,14 +23,22 @@ export class PasswordParser {
     return /[0-9]/.test(password);
   }
 
-  private countRepeats(password: string): number {
-    let countRepeatsOver3 = 0;
-    for (let i = 2; i < password.length; i++) {
-      if (password[i] === password[i - 1] && password[i] === password[i - 2]) {
-        countRepeatsOver3++;
-        i++;
+  private countRepeatsOver3(password: string): number {
+    let repeats = 0;
+    let repeatCount = 1;
+
+    for (let i = 1; i < password.length; i++) {
+      if (password[i] === password[i - 1]) {
+        repeatCount++;
+        if (repeatCount === 3) {
+          repeats++;
+          repeatCount = 0; // Reset the count after counting a repeat
+        }
+      } else {
+        repeatCount = 1;
       }
     }
-    return countRepeatsOver3;
+
+    return repeats;
   }
 }

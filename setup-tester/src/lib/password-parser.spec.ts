@@ -73,4 +73,28 @@ describe('PasswordParser', () => {
       countRepeatsOver3: 3,
     });
   });
+
+  test('should correctly handle a password with long repeats', () => {
+    const parser = new PasswordParser();
+    const stats = parser.parse('1111111111');
+    expect(stats).toEqual(<PasswordStats>{
+      length: 10,
+      hasLowercase: false,
+      hasUppercase: false,
+      hasDigit: true,
+      countRepeatsOver3: 3,
+    });
+  });
+
+  test('should correctly handle a password with multiple long repeats', () => {
+    const parser = new PasswordParser();
+    const stats = parser.parse('bbaaaaaaaaaaaaaaacccccc');
+    expect(stats).toEqual(<PasswordStats>{
+      length: 23,
+      hasLowercase: true,
+      hasUppercase: false,
+      hasDigit: false,
+      countRepeatsOver3: 7,
+    });
+  });
 });
