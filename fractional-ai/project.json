@@ -1,0 +1,19 @@
+{
+  "name": "fractional-ai",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "fractional-ai/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/fractional-ai",
+        "main": "fractional-ai/src/index.ts",
+        "tsConfig": "fractional-ai/tsconfig.lib.json",
+        "assets": ["fractional-ai/*.md"]
+      }
+    }
+  }
+}
