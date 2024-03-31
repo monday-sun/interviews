@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@interviews-ts/fractional-ai": ["fractional-ai/src/index.ts"],
       "@interviews-ts/setup-tester": ["setup-tester/src/index.ts"]
     }
   },
