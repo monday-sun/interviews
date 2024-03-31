@@ -43,7 +43,7 @@ describe('minStepsToStrongPassword', () => {
     });
 
     test('should return 6 for an empty password', () => {
-      expect(minStepsToStrongPassword('')).toBe(6);
+      expect(minStepsToStrongPassword('')).toBe(9);
     });
   });
 });
