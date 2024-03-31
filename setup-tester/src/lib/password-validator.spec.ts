@@ -1,49 +1,83 @@
-import { minStepsToStrongPassword } from './setup-tester'; // Adjust the import path according to your file structure
+import { PasswordValidator } from './password-validator';
+import { PasswordStats } from './password.types';
 
-describe('minStepsToStrongPassword', () => {
-  describe('password inclusions', () => {
-    test('should return 0 for a strong password', () => {
-      expect(minStepsToStrongPassword('Strong1')).toBe(0);
-    });
+describe('PasswordValidator', () => {
+  const validator = new PasswordValidator();
 
-    test('should return 1 for a password missing a digit', () => {
-      expect(minStepsToStrongPassword('WeakPass')).toBe(1);
-    });
-
-    test('should return 1 for a password missing a lower case letter', () => {
-      expect(minStepsToStrongPassword('WEAKPASS1')).toBe(1);
-    });
-
-    test('should return 2 for a password missing an uppercase letter and a digit', () => {
-      expect(minStepsToStrongPassword('weakpass')).toBe(2);
-    });
+  test('should return 0 for a strong password', () => {
+    const stats: PasswordStats = {
+      length: 8,
+      hasLowercase: true,
+      hasUppercase: true,
+      hasDigit: true,
+      countRepeatsOver3: 0,
+    };
+    expect(validator.validate(stats)).toBe(0);
   });
 
-  describe('repeat tokens', () => {
-    test('should return 1 for a password with three repeating characters', () => {
-      expect(minStepsToStrongPassword('Baaabb0')).toBe(1);
-    });
-
-    test('should return 2 for a password with four repeating characters', () => {
-      expect(minStepsToStrongPassword('Baaaaabb0')).toBe(2);
-    });
-
-    test('should return 0 for a password with two repeating characters', () => {
-      expect(minStepsToStrongPassword('Baabb0')).toBe(0);
-    });
+  test('should return 1 for a password missing a digit', () => {
+    const stats: PasswordStats = {
+      length: 8,
+      hasLowercase: true,
+      hasUppercase: true,
+      hasDigit: false,
+      countRepeatsOver3: 0,
+    };
+    expect(validator.validate(stats)).toBe(1);
   });
 
-  describe('password length', () => {
-    test('should return 3 for a short password', () => {
-      expect(minStepsToStrongPassword('aB3')).toBe(3);
-    });
+  test('should return 1 for a password with repeating characters', () => {
+    const stats: PasswordStats = {
+      length: 8,
+      hasLowercase: true,
+      hasUppercase: true,
+      hasDigit: true,
+      countRepeatsOver3: 1,
+    };
+    expect(validator.validate(stats)).toBe(1);
+  });
 
-    test('should return 3 for a long password with extra characters', () => {
-      expect(minStepsToStrongPassword('1234567890abcdefAAAAAAA')).toBe(3);
-    });
+  test('should return 3 for a 3 character password', () => {
+    const stats: PasswordStats = {
+      length: 3,
+      hasLowercase: true,
+      hasUppercase: true,
+      hasDigit: true,
+      countRepeatsOver3: 0,
+    };
+    expect(validator.validate(stats)).toBe(3);
+  });
 
-    test('should return 6 for an empty password', () => {
-      expect(minStepsToStrongPassword('')).toBe(9);
-    });
+  test('should return 4 for a 24 character password', () => {
+    const stats: PasswordStats = {
+      length: 24,
+      hasLowercase: true,
+      hasUppercase: true,
+      hasDigit: true,
+      countRepeatsOver3: 0,
+    };
+    expect(validator.validate(stats)).toBe(4);
+  });
+
+  test('should return 2 for a password missing an uppercase letter and a digit', () => {
+    const stats: PasswordStats = {
+      length: 8,
+      hasLowercase: true,
+      hasUppercase: false,
+      hasDigit: false,
+      countRepeatsOver3: 0,
+    };
+    expect(validator.validate(stats)).toBe(2);
+  });
+
+  test('should return 9 for an empty password', () => {
+    const stats: PasswordStats = {
+      length: 0,
+      hasLowercase: false,
+      hasUppercase: false,
+      hasDigit: false,
+      countRepeatsOver3: 0,
+    };
+    expect(validator.validate(stats)).toBe(9);
   });
 });
