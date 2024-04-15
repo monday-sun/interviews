@@ -15,6 +15,7 @@ export class Drawer {
 
     let err = dx - dy;
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       canvas.setPixel(startX, startY, true);
 
