@@ -13,6 +13,7 @@ describe('CanvasRenderer', () => {
     canvas.setPixel(1, 1, true);
     canvas.setPixel(2, 2, true);
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     renderer.render(canvas);
